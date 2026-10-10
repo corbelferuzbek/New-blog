@@ -877,6 +877,10 @@ def files_public(folder_id=None):
         crumbs=crumbs,
     )
 
+@app.route("/download/<filename>")
+def download_file(filename):
+    # Faylni xavfsiz yuklab berish kodi
+    return send_from_directory('uploads', filename, as_attachment=True)
 
 @app.get("/f/<int:file_id>")
 @app.get("/f/<int:file_id>/<path:name>")
