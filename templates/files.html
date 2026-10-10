@@ -1,48 +1,40 @@
-{% extends "base.html" %}
-{% block title %}Fayllar{% if folder %} · {{ folder.name }}{% endif %} · {{ site.name }}{% endblock %}
-{% block content %}
-<div class="wrap files-page">
-  <div class="page-title">
-    <span class="kicker">Fayllar</span>
-    <h1>{% if folder %}{{ folder.name }}{% else %}Barcha fayllar{% endif %}</h1>
-    {% if crumbs %}
-    <nav class="crumbs">
-      <a href="{{ url_for('files_public') }}">Asosiy</a>
-      {% for c in crumbs %}
-        <span>/</span>
-        {% if loop.last %}
-          <span>{{ c.name }}</span>
-        {% else %}
-          <a href="{{ url_for('files_public', folder_id=c.id) }}">{{ c.name }}</a>
-        {% endif %}
-      {% endfor %}
-    </nav>
-    {% endif %}
-  </div>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>Fayllar ro'yxati</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Yuklangan fayllar</h1>
+        <p><a href="{{ url_for('index') }}">&larr; Bosh sahifaga qaytish</a></p>
 
-  {% if folders or files %}
-  <div class="file-grid">
-    {% for f in folders %}
-    <a class="file-card folder" href="{{ url_for('files_public', folder_id=f.id) }}">
-      <div class="icon">📁</div>
-      <div class="info">
-        <b>{{ f.name }}</b>
-        <span class="meta">Papka</span>
-      </div>
-    </a>
-    {% endfor %}
-    {% for f in files %}
-    <a class="file-card" href="{{ url_for('file_download', file_id=f.id, name=f.name) }}">
-      <div class="icon">{% if f.name|is_image %}🖼️{% else %}📄{% endif %}</div>
-      <div class="info">
-        <b>{{ f.name }}</b>
-        <span class="meta">{{ f.size|fsize }} · {{ f.downloads|num }} yuklab olish</span>
-      </div>
-    </a>
-    {% endfor %}
-  </div>
-  {% else %}
-  <p class="empty">Bu papkada hali hech narsa yo'q.</p>
-  {% endif %}
-</div>
-{% endblock %}
+        {% if files %}
+            <table class="file-table">
+                <thead>
+                    <tr>
+                        <th>Fayl nomi</th>
+                        <th>Hajmi / Sana</th>
+                        <th>Amal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.date }}</td>
+                        <td>
+                            <!-- Oddiy userlar ham ko'rishi va yuklab olishi mumkin -->
+                            <a href="{{ url_for('download_file', filename=file.name) }}" class="btn-download">Yuklab olish</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Hozircha fayllar mavjud emas.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
