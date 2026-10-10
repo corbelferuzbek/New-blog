@@ -2,12 +2,13 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Fayllar ro'yxati</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuklangan fayllar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Yuklangan fayllar</h1>
+        <h1>Fayllar ro'yxati</h1>
         <p><a href="{{ url_for('index') }}">&larr; Bosh sahifaga qaytish</a></p>
 
         {% if files %}
@@ -15,17 +16,16 @@
                 <thead>
                     <tr>
                         <th>Fayl nomi</th>
-                        <th>Hajmi / Sana</th>
+                        <th>Sana / Hajmi</th>
                         <th>Amal</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for file in files %}
                     <tr>
-                        <td>{{ file.name }}</td>
+                        <td><strong>{{ file.name }}</strong></td>
                         <td>{{ file.date }}</td>
                         <td>
-                            <!-- Oddiy userlar ham ko'rishi va yuklab olishi mumkin -->
                             <a href="{{ url_for('download_file', filename=file.name) }}" class="btn-download">Yuklab olish</a>
                         </td>
                     </tr>
@@ -33,7 +33,7 @@
                 </tbody>
             </table>
         {% else %}
-            <p>Hozircha fayllar mavjud emas.</p>
+            <p style="color: #6b7280; margin-top: 20px;">Hozircha yuklangan fayllar mavjud emas.</p>
         {% endif %}
     </div>
 </body>
