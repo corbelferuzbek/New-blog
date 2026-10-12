@@ -36,5 +36,14 @@
             <p style="color: #6b7280; margin-top: 20px;">Hozircha yuklangan fayllar mavjud emas.</p>
         {% endif %}
     </div>
+    {% for file in files %}
+<tr>
+    <td><strong>{{ file.name }}</strong></td>
+    <td>
+        <!-- Supabase public havolasi orqali to'g'ridan-to'g'ri ochish yoki yuklab olish -->
+        <a href="{{ file.url }}" target="_blank" class="btn-download">Yuklab olish / Ko'rish</a>
+    </td>
+</tr>
+{% endfor %}
 </body>
 </html>
