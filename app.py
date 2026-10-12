@@ -4,6 +4,13 @@ from supabase import create_client, Client
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+@app.template_filter('kun')
+def kun_filter(date_str):
+    # Bu yerda sanani kerakli formatga o'tkazishingiz yoki shunchaki o'zini qaytarishingiz mumkin
+    if not date_str:
+        return ""
+    # Misol uchun, sananing faqat sana qismini olish yoki formatlash
+    return str(date_str).split("T")[0]
 app.secret_key = os.environ.get("SECRET_KEY", "maxfiy-kalit-soz")
 
 # Supabase ulanishini sozlash
